@@ -1,0 +1,78 @@
+version: '2'
+
+services:
+  console:
+    image: "redboxdigital/docker-console:7.0"
+    tty: true
+    working_dir: "/mnt/www"
+    volumes:
+      - "~/.ssh/redbox-docker-socket:/home/www-data/.ssh/redbox-docker-socket"
+      - "~/.composer/cache:/home/www-data/.composer/cache"
+      - "~/.ssh/known_hosts:/home/www-data/known_hosts"
+    environment:
+      SSH_AUTH_SOCK: "/home/www-data/.ssh/redbox-docker-socket"
+    volumes_from:
+      - "appserver"
+
+  webserver:
+    image: "nginx:alpine"
+    ports:
+      - "80:80"
+    links:
+      - "appserver"
+      - "appserver_debug"
+    volumes:
+      - "./servers/webserver/etc/nginx.conf:/etc/nginx/nginx.conf"
+    volumes_from:
+      - "appserver"
+
+  appserver:
+    image: "redboxdigital/php:7.0"
+    links:
+      - "database"
+      - "cache"
+      - "fpc"
+      - "session"
+      - "messagequeue"
+      - "mail"
+    volumes:
+      - "./src:/mnt/www"
+
+  appserver_debug:
+    image: "redboxdigital/php:7.0-xdebug"
+    links:
+      - "database"
+      - "cache"
+      - "fpc"
+      - "session"
+      - "messagequeue"
+      - "mail"
+    volumes_from:
+      - "appserver"
+
+  database:
+    image: percona:5.6
+    ports:
+      - "3306:3306"
+    volumes:
+      - "/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+
+  mail:
+    image: "redboxdigital/mailcatcher"
+    ports:
+      - "1080:80"
+
+  cache:
+    image: "redis:alpine"
+  fpc:
+    image: "redis:alpine"
+  session:
+    image: "redis:alpine"
+
+  messagequeue:
+    image: "rabbitmq:management"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
