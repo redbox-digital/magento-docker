@@ -37,6 +37,7 @@ services:
       - "mail"
     volumes:
       - "./src:/mnt/www"
+      - "./servers/appserver/etc/php.ini:/usr/local/etc/php/php.ini"
 
   appserver_debug:
     image: "redboxdigital/php:7.0-xdebug"
