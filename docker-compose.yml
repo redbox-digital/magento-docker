@@ -1,19 +1,6 @@
 version: '2'
 
 services:
-  console:
-    image: "redboxdigital/docker-console:7.0"
-    tty: true
-    working_dir: "/mnt/www"
-    volumes:
-      - "~/.ssh/redbox-docker-socket:/home/www-data/.ssh/redbox-docker-socket"
-      - "~/.composer/cache:/home/www-data/.composer/cache"
-      - "~/.ssh/known_hosts:/home/www-data/known_hosts"
-    environment:
-      SSH_AUTH_SOCK: "/home/www-data/.ssh/redbox-docker-socket"
-    volumes_from:
-      - "appserver"
-
   webserver:
     image: "nginx:alpine"
     ports:
