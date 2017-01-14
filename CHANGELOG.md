@@ -11,4 +11,8 @@ The format is based on [Keep a Changelog][link]
 * `fix-permissions` command
 * README and CHANGELOG
 
+### Changed
+
+* Introduced a build process for selective artifacts
+
 [link]: http://keepachangelog.com/

@@ -1,6 +1,14 @@
 #! /usr/bin/env bash
 set -e
 
+function start_docker {
+  docker-compose up -d
+}
+
+function stop_docker {
+  docker-compose stop
+}
+
 function run {
   local project_name="$(docker-compose ps | head -3 | tail -1 | cut -d_ -f1)"
   docker run \
@@ -87,6 +95,12 @@ function fix_permissions {
 
 function main {
   case $1 in
+    "start")
+      start_docker
+      ;;
+    "stop")
+      stop_docker
+      ;;
     "run")
       run "${@:2}"
       ;;
