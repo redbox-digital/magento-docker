@@ -16,13 +16,72 @@ function run {
     -e COMPOSER_HOME="$HOME/.composer" \
     -e SSH_AUTH_SOCK="$SSH_AUTH_SOCK" \
     -w /mnt/www redboxdigital/docker-console \
-    "${@:2}"
+    "$@"
+}
+
+function fix_permissions {
+  local project_name="$(docker-compose ps | head -3 | tail -1 | cut -d_ -f1)"
+
+  echo "Beginning correction of owner"
+  docker run \
+    -it \
+    --rm \
+    --net=${project_name}_default \
+    -u "root:82" \
+    --volumes-from="${project_name}_appserver_1" \
+    -w /mnt/www alpine \
+    chown -R "$(id -u):82" .
+
+  echo "Beginning correction of normal file permissions"
+  docker run \
+    -it \
+    --rm \
+    --net=${project_name}_default \
+    -u "$(id -u):82" \
+    --volumes-from="${project_name}_appserver_1" \
+    -w /mnt/www alpine \
+    find . -exec chmod 744 {} \;
+
+  echo "Adding sticky bit to group permissions for directories"
+  docker run \
+    -it \
+    --rm \
+    --net=${project_name}_default \
+    -u "$(id -u):82" \
+    --volumes-from="${project_name}_appserver_1" \
+    -w /mnt/www alpine \
+    find . -type d -exec chmod g+s {} \;
+
+  echo "Adding group write permissions to var/"
+  docker run \
+    -it \
+    --rm \
+    --net=${project_name}_default \
+    -u "$(id -u):82" \
+    --volumes-from="${project_name}_appserver_1" \
+    -w /mnt/www alpine \
+    find var/ -exec chmod g+w {} \;
+
+  echo "Adding group write permissions to pub/"
+  docker run \
+    -it \
+    --rm \
+    --net=${project_name}_default \
+    -u "$(id -u):82" \
+    --volumes-from="${project_name}_appserver_1" \
+    -w /mnt/www alpine \
+    find pub/ -exec chmod g+w {} \;
+
+  echo "All finished"
 }
 
 function main {
   case $1 in
     "run")
-      run $@
+      run "${@:2}"
+      ;;
+    "fix-permissions")
+      fix_permissions
       ;;
     *)
       echo "Please run a command"
