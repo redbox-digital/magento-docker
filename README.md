@@ -127,9 +127,9 @@ Any commands run via `./bin/rd run [...]` will run with your host user id, and t
 
 ## Known Issues
 
-[ ] Alpine Linux does not support the `GLOB_BRACE` constant, which exposes
+- [ ] Alpine Linux does not support the `GLOB_BRACE` constant, which exposes
 a notice in the glob utility in the version of `Zend\StdLib` that Magento
 2 currently uses. This is fixed in the latest version, and we are petitioning
 Magento to upgrade their dependencies.
-[ ] It is not yet possible to debug a console command. This is important for
+- [ ] It is not yet possible to debug a console command. This is important for
 debugging upgrade scripts, or cron tasks.
