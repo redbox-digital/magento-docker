@@ -15,7 +15,7 @@ function run {
     -v "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK" \
     -e COMPOSER_HOME="$HOME/.composer" \
     -e SSH_AUTH_SOCK="$SSH_AUTH_SOCK" \
-    -w /mnt/www redboxdigital/docker-console:local \
+    -w /mnt/www redboxdigital/docker-console \
     "${@:2}"
 }
 
