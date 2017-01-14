@@ -5,37 +5,32 @@ services:
     image: "nginx:alpine"
     ports:
       - "80:80"
-    links:
-      - "appserver"
-      - "appserver_debug"
     volumes:
       - "./servers/webserver/etc/nginx.conf:/etc/nginx/nginx.conf"
     volumes_from:
       - "appserver"
+    depends_on:
+      - "appserver"
+      - "appserver_debug"
 
   appserver:
     image: "redboxdigital/php:7.0"
-    links:
-      - "database"
-      - "cache"
-      - "fpc"
-      - "session"
-      - "messagequeue"
-      - "mail"
     volumes:
       - "./src:/mnt/www"
       - "./servers/appserver/etc/php.ini:/usr/local/etc/php/php.ini"
-
-  appserver_debug:
-    image: "redboxdigital/php:7.0-xdebug"
-    links:
+    depends_on:
       - "database"
+      - "mail"
       - "cache"
       - "fpc"
       - "session"
       - "messagequeue"
-      - "mail"
+
+  appserver_debug:
+    image: "redboxdigital/php:7.0-xdebug"
     volumes_from:
+      - "appserver"
+    depends_on:
       - "appserver"
 
   database:
