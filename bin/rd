@@ -1,0 +1,33 @@
+#! /usr/bin/env bash
+set -e
+
+function run {
+  local project_name="$(docker-compose ps | head -3 | tail -1 | cut -d_ -f1)"
+  docker run \
+    -it \
+    --rm \
+    --net=${project_name}_default \
+    -u "$(id -u):82" \
+    --volumes-from="${project_name}_appserver_1" \
+    -v "/etc/passwd:/etc/passwd" \
+    -v "$HOME/.ssh/known_hosts:$HOME/.ssh/known_hosts" \
+    -v "$HOME/.composer:$HOME/.composer" \
+    -v "$SSH_AUTH_SOCK:$SSH_AUTH_SOCK" \
+    -e COMPOSER_HOME="$HOME/.composer" \
+    -e SSH_AUTH_SOCK="$SSH_AUTH_SOCK" \
+    -w /mnt/www redboxdigital/docker-console:local \
+    "${@:2}"
+}
+
+function main {
+  case $1 in
+    "run")
+      run $@
+      ;;
+    *)
+      echo "Please run a command"
+      ;;
+  esac
+}
+
+main "$@"
