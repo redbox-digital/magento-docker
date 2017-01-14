@@ -40,7 +40,17 @@ function fix_permissions {
     -u "$(id -u):82" \
     --volumes-from="${project_name}_appserver_1" \
     -w /mnt/www alpine \
-    find . -exec chmod 744 {} \;
+    find . -type f -exec chmod 744 {} \;
+
+  echo "Beginning correction of directory permissions"
+  docker run \
+    -it \
+    --rm \
+    --net=${project_name}_default \
+    -u "$(id -u):82" \
+    --volumes-from="${project_name}_appserver_1" \
+    -w /mnt/www alpine \
+    find . -type d -exec chmod 755 {} \;
 
   echo "Adding sticky bit to group permissions for directories"
   docker run \
