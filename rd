@@ -17,20 +17,20 @@ function find_in_parent {
     echo -n "$candidate"
   elif [ "$start" == "/" ]
   then
-    >&2 echo "File $filename not found in any directory"
+    >&2 echo -n "File $filename not found in any directory"
   else
     find_in_parent "$filename" "$(dirname $start)"
   fi
 }
 
 function main {
-  local rd="$(find_in_parent bin/rd)"
+  local rd="$(find_in_parent bin/rd 2> /dev/null)"
 
-  if [ -n "$rd" ]
+  if [ -x "$rd" ]
   then
     exec "$rd" "$@"
   else
-    >&@ echo "Unable to find a Redbox Docker project in any parent directory."
+    >&2 echo "Unable to find a Redbox Docker project in any parent directory."
   fi
 }
 
