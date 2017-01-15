@@ -107,7 +107,7 @@ chmod +x ./rd
 ```
 
 Then move it to some location in your `$PATH`, and you should be able to call
-something like `rd composer status`.
+something like `rd run composer status`.
 
 ## Permissions
 
