@@ -5,7 +5,7 @@ based on Docker.
 
 ## Installation
 
-1. Download a tarball of the latest release, and extract it somewhere.
+1. Download the dist tarball of the latest release, and extract it somewhere.
 2. Clone your project into a directory called `src`: `git clone <project url>
 src`
 1. Obtain an `env.php`, and a `config.php` from somewhere, and drop them into
