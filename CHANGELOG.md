@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog][link]
 
 ### Added
 
+* Added a global utility to forward to local `rd`
 * `fix-permissions` command
 * README and CHANGELOG
 

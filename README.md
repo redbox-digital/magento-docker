@@ -81,7 +81,7 @@ We built this to run on Linux. We are pretty sure that it should run on Docker
 for Mac, or Docker for Windows, but we haven't tested, and it's likely you will
 suffer from poor volume performance.
 
-## `./bin/rd`
+## `rd`
 
 This utility is the management console for the Redbox Docker environment. It
 comes with a few commands, but the most common of these is `run`
@@ -97,6 +97,17 @@ keeps your server containers lean and without all that administration junk.
 The container that runs these commands is based on a custom console image.
 Please check its documentation for a full list of installed utilities, and to
 remind us of anything that was missed. 
+
+If you want to run `rd` globally, we added a proxy command to speak to the `rd`
+utility that is available on your environment. To install it, run the following:
+
+```bash
+curl -sS -O https://raw.githubusercontent.com/redbox-digital/magento-docker/master/rd
+chmod +x ./rd
+```
+
+Then move it to some location in your `$PATH`, and you should be able to call
+something like `rd composer status`.
 
 ## Permissions
 
