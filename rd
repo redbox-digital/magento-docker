@@ -26,7 +26,7 @@ function find_in_parent {
 function main {
   local rd="$(find_in_parent bin/rd)"
 
-  if [ $? -eq 0 ]
+  if [ -n "$rd" ]
   then
     exec "$rd" "$@"
   else
