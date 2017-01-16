@@ -90,6 +90,15 @@ function fix_permissions {
     -w /mnt/www alpine \
     find pub/ -exec chmod g+w {} \;
 
+  docker run \
+    -it \
+    --rm \
+    --net=${project_name}_default \
+    -u "$(id -u):82" \
+    --volumes-from="${project_name}_appserver_1" \
+    -w /mnt/www alpine \
+    chmod +x bin/magento
+
   echo "All finished"
 }
 
