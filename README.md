@@ -5,14 +5,14 @@ based on Docker.
 
 ## Installation
 
-1. Download the dist tarball of the latest release, and extract it somewhere.
-2. Clone your project into a directory called `src`: `git clone <project url>
-src`
-1. Obtain an `env.php`, and a `config.php` from somewhere, and drop them into
-`src/app/etc/`.
-1. Start your engines: `docker-compose up -d`
-2. Install your project. To run commands in the docker environment, please use
-the `rd` utility provided. For example: `./bin/rd run composer install`.
+```bash
+curl -sS https://raw.githubusercontent.com/redbox-digital/magento-docker/master/rd > /usr/local/bin/rd
+chmod +x /usr/local/bin/rd
+rd create my-project
+cd my-project
+
+rd start
+```
 
 You should now be up and running. If you're not, then you are having fun and
 games to get Magento up and running.
