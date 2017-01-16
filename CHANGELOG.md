@@ -8,7 +8,13 @@ The format is based on [Keep a Changelog][link]
 
 ### Added
 
-* Added a global utility to forward to local `rd`
+* Add `update` command to global rd to pull latest rd file
+
+## 0.1.0
+
+### Added
+
+* A global utility to forward to local `rd`
 * `fix-permissions` command
 * README and CHANGELOG
 
