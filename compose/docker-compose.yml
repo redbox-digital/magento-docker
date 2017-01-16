@@ -18,6 +18,7 @@ services:
     volumes:
       - "./src:/mnt/www"
       - "./servers/appserver/etc/php.ini:/usr/local/etc/php/php.ini"
+      - "./servers/appserver/etc/fix_glob_brace.php:/usr/local/etc/php/fix_glob_brace.php"
     depends_on:
       - "database"
       - "mail"

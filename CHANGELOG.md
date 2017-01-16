@@ -10,6 +10,10 @@ The format is based on [Keep a Changelog][link]
 
 * Add `update` command to global rd to pull latest rd file
 
+### Fixed
+
+* Fix issue preventing asset compilation
+
 ## 0.1.0
 
 ### Added
