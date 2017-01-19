@@ -40,6 +40,7 @@ services:
       - "3306:3306"
     volumes:
       - "/var/lib/mysql"
+      - "./servers/database/etc/mysql/my.cnf:/etc/mysql/my.cnf"
     environment:
       MYSQL_ROOT_PASSWORD: "root"
 
